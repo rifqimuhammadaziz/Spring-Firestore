@@ -1,11 +1,15 @@
 package rifqimuhammadaziz.springfirebase.controller;
 
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rifqimuhammadaziz.springfirebase.entity.Post;
 import rifqimuhammadaziz.springfirebase.service.PostService;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -13,6 +17,14 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @GetMapping
+    public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
+        return postService.findAllPosts();
+    }
 
     @PostMapping("/create")
     public Post create(@RequestBody Post post) {

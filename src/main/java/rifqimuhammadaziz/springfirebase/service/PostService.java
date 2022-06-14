@@ -1,16 +1,15 @@
 package rifqimuhammadaziz.springfirebase.service;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import rifqimuhammadaziz.springfirebase.entity.Post;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -27,6 +26,23 @@ public class PostService {
                 .set(post);
 
         return post;
+    }
+
+    public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+
+        // asynchronously retrieve all documents
+        ApiFuture<QuerySnapshot> future = dbFirestore.collection("posts").get();
+
+        // future.get() blocks on response
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List<Post> posts = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            System.out.println(document.getId() + " => " + document.toObject(Post.class).getTitle());
+            posts.add(document.toObject(Post.class));
+        }
+
+        return posts;
     }
 
     public Post findByPostId(String postId) throws ExecutionException, InterruptedException {

@@ -1,5 +1,6 @@
 package rifqimuhammadaziz.springfirebase.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rifqimuhammadaziz.springfirebase.entity.User;
@@ -11,14 +12,11 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/api/users")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/document_id")
-    public String findByDocumentId(@RequestParam String documentId) {
+    @GetMapping("/get")
+    public User findByDocumentId(@RequestParam String documentId) throws ExecutionException, InterruptedException {
         return userService.findByDocumentId(documentId);
     }
 
@@ -28,7 +26,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public String updateByDocumentId(@RequestBody User user) {
+    public String updateByDocumentId(@RequestBody User user) throws ExecutionException, InterruptedException {
         return userService.updateByDocumentId(user);
     }
 

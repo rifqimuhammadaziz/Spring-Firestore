@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteByDocumentId(@RequestParam String documentId) {
+    public String deleteByDocumentId(@RequestParam String documentId) throws ExecutionException, InterruptedException {
         return userService.deleteByDocumentId(documentId);
     }
 

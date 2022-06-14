@@ -30,11 +30,8 @@ public class PostService {
 
     public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-
-        // asynchronously retrieve all documents
         ApiFuture<QuerySnapshot> future = dbFirestore.collection("posts").get();
 
-        // future.get() blocks on response
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         List<Post> posts = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents) {

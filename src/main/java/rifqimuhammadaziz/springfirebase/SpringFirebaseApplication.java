@@ -31,8 +31,4 @@ public class SpringFirebaseApplication {
         }
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 }

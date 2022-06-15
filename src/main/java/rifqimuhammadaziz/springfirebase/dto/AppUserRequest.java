@@ -1,15 +1,14 @@
 package rifqimuhammadaziz.springfirebase.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import rifqimuhammadaziz.springfirebase.validator.PasswordEqualConstraint;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Data
-@NoArgsConstructor
+@Getter
 @PasswordEqualConstraint(message = "Invalid Retype Password")
 public class AppUserRequest {
 
@@ -29,4 +28,24 @@ public class AppUserRequest {
 
     @NotEmpty(message = "Retype Password is required")
     private String retypePassword;
+
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber.trim();
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName.trim();
+    }
+
+    public void setEmail(String email) {
+        this.email = email.trim();
+    }
+
+    public void setPassword(String password) {
+        this.password = password.trim();
+    }
+
+    public void setRetypePassword(String retypePassword) {
+        this.retypePassword = retypePassword.trim();
+    }
 }

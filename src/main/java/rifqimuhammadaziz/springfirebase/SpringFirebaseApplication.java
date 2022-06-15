@@ -16,19 +16,6 @@ public class SpringFirebaseApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringFirebaseApplication.class, args);
-
-        try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("serviceAccountKey.json").getInputStream()))
-                    .setDatabaseUrl("https://spring-development-default-rtdb.asia-southeast1.firebasedatabase.app")
-                    .build();
-
-            if(FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import rifqimuhammadaziz.springfirebase.entity.Post;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -30,15 +31,30 @@ public class PostService {
 
     public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<QuerySnapshot> future = dbFirestore.collection("posts").get();
+        final Query query = dbFirestore.collection("posts");
+        final ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
         List<Post> posts = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents) {
             System.out.println(document.getId() + " => " + document.toObject(Post.class).getTitle());
             posts.add(document.toObject(Post.class));
         }
 
+        return posts;
+    }
+
+    public List<Post> findAllPostsByCategory(String postCategory) throws ExecutionException, InterruptedException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        final Query query = dbFirestore.collection("posts").whereEqualTo("category", postCategory);
+        final ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+        List<Post> posts = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            System.out.println(document.getId());
+            posts.add(document.toObject(Post.class));
+        }
         return posts;
     }
 

@@ -36,6 +36,11 @@ public class PostController {
         return postService.findByPostId(postId);
     }
 
+    @GetMapping("/category/{postCategory}")
+    public List<Post> findAllPostsByCategory(@PathVariable String postCategory) throws ExecutionException, InterruptedException {
+        return postService.findAllPostsByCategory(postCategory);
+    }
+
     @PutMapping("/update")
     public String updateByPostId(@RequestBody Post post) throws ExecutionException, InterruptedException {
         return postService.updateByPostId(post);

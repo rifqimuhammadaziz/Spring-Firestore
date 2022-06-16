@@ -6,6 +6,8 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import rifqimuhammadaziz.springfirebase.dto.PostResponse;
+import rifqimuhammadaziz.springfirebase.entity.Category;
 import rifqimuhammadaziz.springfirebase.entity.Post;
 
 import java.util.ArrayList;
@@ -29,16 +31,16 @@ public class PostService {
         return post;
     }
 
-    public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
+    public List<PostResponse> findAllPosts() throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         final Query query = dbFirestore.collection("posts");
         final ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
-        List<Post> posts = new ArrayList<>();
+        List<PostResponse> posts = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents) {
-            System.out.println(document.getId() + " => " + document.toObject(Post.class).getTitle());
-            posts.add(document.toObject(Post.class));
+            System.out.println(document.getId());
+            posts.add(document.toObject(PostResponse.class));
         }
 
         return posts;

@@ -4,6 +4,7 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import rifqimuhammadaziz.springfirebase.dto.PostResponse;
 import rifqimuhammadaziz.springfirebase.entity.Post;
 import rifqimuhammadaziz.springfirebase.service.PostService;
 
@@ -22,7 +23,7 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public List<Post> findAllPosts() throws ExecutionException, InterruptedException {
+    public List<PostResponse> findAllPosts() throws ExecutionException, InterruptedException {
         return postService.findAllPosts();
     }
 

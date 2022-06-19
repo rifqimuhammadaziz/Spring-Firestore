@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Firestore ###
+/src/main/resources/serviceAccountKey.json
+src/main/java/rifqimuhammadaziz/springfirebase/configuration/FirebaseConnection.java
